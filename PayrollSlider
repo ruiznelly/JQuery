@@ -1,0 +1,60 @@
+//This programs calculates the cost of payroll processing base on number of employees and frequency
+//Develop by: Nelly Ruiz
+jQuery(function($) {
+  var get_employees = 1;
+  var total_payroll = 11.00;
+  var pay_freq;
+  var base_rate = 9.00;
+  $('.price-calc').slider({
+    range: "max",
+    min: 1,
+    max: 100,
+    value: 1,
+    slide: function( event, ui ) {
+    //add logic to calculate cost
+    get_employees = parseInt(ui.value);
+    getRate();
+    }
+}).slider('pips').slider('float');
+
+  $("#amount").val(total_payroll);
+  $('#employees').val(get_employees);
+  $("#enterprice").hide();
+  
+$("input[name=payfreq]:radio").change(function () {
+  getRate();
+});
+//Check position of pay frequency select box
+function checkPayFreq() {
+    return $('input[name=payfreq]:checked').val();
+  }
+  function getRate() {
+    $("#enterprice").hide();
+    pay_freq = checkPayFreq();
+    if (get_employees < 100){
+    $(".box-display").show();
+    if (pay_freq == 1){
+    base_rate = 9.00;
+    total_payroll = base_rate + (2.0 * get_employees);
+  }
+  if (pay_freq == 2){
+    base_rate = 18.00;
+    total_payroll = base_rate + (2.0 * get_employees);
+  }
+    if (pay_freq == 3){
+    base_rate = 19.50;
+    total_payroll = base_rate + (2.0 * get_employees);
+  }
+    if (pay_freq == 4){
+    base_rate = 39.00;
+    total_payroll = base_rate + (2.0 * get_employees);
+  }
+    $("#amount").val(total_payroll.toFixed(2));
+    $("#employees").val(get_employees);
+  }
+    else{
+      $(".box-display").hide();
+      $("#enterprice").show();
+    }
+  }
+});
